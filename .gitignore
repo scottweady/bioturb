@@ -1,0 +1,14 @@
+archive
+bioturb-env
+jobs
+status
+*.out
+
+scripts/config_local.py
+
+data/*
+data/processed/correlation/*
+
+!data/examples
+!data/processed
+!data/processed/correlation/*.zip
