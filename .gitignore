@@ -4,11 +4,8 @@ jobs
 status
 *.out
 
-scripts/config_local.py
+analysis/config_local.py
+analysis/__pycache__
 
 data/*
-data/processed/correlation/*
-
 !data/examples
-!data/processed
-!data/processed/correlation/*.zip

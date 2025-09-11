@@ -1,0 +1,11 @@
+hydro: true
+freeStreamVelocity: [0.0, 0.0, 0.0] #um/s
+wallZ0: false
+fmmMultOrder: 8 # even number in [6,8,10,12,14]
+flowGrid: -1.0 # um
+cellHydro:
+  - group: 0
+    numberOfQuadraturePoints: 4 
+    forceExternal: [0.0, 0.0, 0.0] # pN
+    torqueExternal: [0.0, 0.0, 0.0] # pN
+    file: "Hydro0.csv"

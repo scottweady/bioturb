@@ -1,7 +1,7 @@
 
 # Parent directories to search for source data
-local = "data/raw"
-directories = [local]
+examples = "data/examples"
+directories = [examples]
 
 # Target directory for processed data
-target = f"data/processed"
+target = f"data/scratch"

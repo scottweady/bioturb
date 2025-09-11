@@ -1,4 +1,6 @@
 
+print("Loading sbt module, this may take a while...")
+
 import numpy as np
 import os, sys
 import finufft
@@ -28,7 +30,7 @@ def locateData(nu, L, directories, target):
     # Check which parent directory
     for directory in directories:
         if os.path.exists(f"{directory}/{source}"):
-            print(f"Found source directory in {directory}")
+            print(f"Located {source} in {directory}.")
             source = f"{directory}/{source}"
             break
 

@@ -1,7 +1,7 @@
 
 # Import modules
 import numpy as np
-import glob, sys, yaml
+import glob, sys
 from natsort import natsorted
 import sbt
 
