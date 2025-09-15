@@ -1,6 +1,9 @@
 
 close all
+addpath('utils')
+fig = journal_figure([3.375 2], 2);
 
+%% Compute velocity norm over parameter space and plot as a contour
 nuspan = {'0.0625', '0.125', '0.25', '0.5', '0.75', '1.0'};
 Lspan = 25 : 25 : 150;
 
@@ -18,34 +21,29 @@ for nnu = 1 : Nnu
   end
 end
 
-% Reform as double
+% Reform nu as double and create grid
 nuspan = 5 * [0 0.0625 0.125 0.25 0.5 0.75 1.0];
 [L, nu] = meshgrid(Lspan, nuspan);
-
-fig = journal_figure([6.75/2 2], 2);
-
-el = 1; %particle length
-b = 0.2; %particle diameter
-mu = 1; %viscosity
-Us = 1; %swimming speed
-eta = 4 * pi * mu / log(2 * el / b); %slender body drag coefficient
-sigma = eta * Us * el^2 / 8; %dipole strength
-
-contourf(nu, L, U, 16, 'EdgeColor', 'none')
-hold on
-nu = nu(2 : end, :);
-L = L(2 : end, :);
-U = U(2 : end, :);
-scatter(nu(:), L(:), 500, U(:), 'filled', 'MarkerEdgeColor', 'k', 'LineWidth', 2)
-
-hold on
+contourf(nu, L, U, 16, 'EdgeColor', 'none'), hold on
+nu = nu(2 : end, :); L = L(2 : end, :); U = U(2 : end, :);
+scatter(nu(:), L(:), 500, U(:), 'filled', 'MarkerEdgeColor', 'k', 'LineWidth', 2), hold on
 plot([1 1], [25 150], 'w:')
+
+%% Format
 box on
 axis tight
 
+% Axis labels
 xlabelHandle = xlabel('$\nu$');
 ylabel('$L / \ell$')
 
+xlim(5 * [0 1 + 1e-3])
+ylim([25-1e-3 150+1e-3])
+
+xticks(0 : 1 : 5)
+yticks(25 : 25 : 150)
+
+% Colormap
 colormap(flipud(cmocean('matter')))
 colorbarHandle = colorbar;
 colorbarHandle.TickLabelInterpreter = 'latex';
@@ -53,12 +51,8 @@ colorbarHandle.Ticks = [0 0.7];
 colorbarLabel = ylabel(colorbarHandle, '$\overline{||\mathbf{u}||_2}$', 'interpreter', 'latex', 'rotation', 0, 'FontSize', 18);
 
 clim([0 0.7])
-xlim(5 * [0 1 + 1e-3])
-ylim([25-1e-3 150+1e-3])
 
-xticks(0 : 1 : 5)
-yticks(25 : 25 : 150)
-
+% Position
 ax = gca;
 ax.Units = 'inches';
 
@@ -79,38 +73,20 @@ nu_star = annotation('textbox', 'FontSize', 18, 'interpreter', 'latex', 'edgecol
 nu_star.Position(1) = 1.8;
 nu_star.Position(2) = 3.15;
 
-set(gca,'ClippingStyle','rectangle');
+ax.ClippingStyle = 'rectangle';
 
-% Process function
-function l2norm = velocityNorm(nu, L)
+%% Function to compute velocity norm
+function l2norm_bar = velocityNorm(nu, L)
 
   % Get file name
-  source = sprintf('../data/processed/correlation/nu%s_L%d', nu, L);
-  filenames = sortfiles(source, 'corr', 'dat');
-  Nfiles = length(filenames);
-
-  if Nfiles == 0
-    l2norm = nan;
-    return
-  end
-
-  % Preallocate for storing l2 norm
-  l2Evolution = zeros(Nfiles, 1);
-
-  % Loop over files
-  for nf = 1 : Nfiles
-    C = load(strcat(source, '/', filenames{nf}));
-    l2Evolution(nf) = sqrt(abs(C(5, 1)));
-  end
+  source = sprintf('../../data/processed/correlation_functions/nu%s_L%d', nu, L);
+  C = load(strcat(source, '/u.dat'));
+  l2norm = sqrt(C(:, 1));
+  Nt = length(l2norm);
 
   % Averaging interval
-  Nspan = min(175, Nfiles) : Nfiles;
-
-  if isempty(Nspan)
-    l2norm = nan;
-  else
-    l2norm = mean(l2Evolution(Nspan)) / L;
-  end
+  Nspan = min(Nt - 50, 150) : Nt;
+  l2norm_bar = mean(l2norm(Nspan)) / L;
 
 
 end

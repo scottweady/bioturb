@@ -1,10 +1,9 @@
 
-% 3D flow around a slender force-free swimmer 
-% See fig. 1 in manuscript
 
 %% Setup
 
 close all
+addpath('utils')
 fig = journal_figure([3.375 3.375], 2);
 
 N = 16; %number of grid points in each direction

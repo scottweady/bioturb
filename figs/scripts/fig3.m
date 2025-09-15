@@ -1,8 +1,9 @@
 
 close all
-
-% Initialize figure
+addpath('utils')
 fig = journal_figure([6.75 3.25], 2);
+
+%% Configure
 
 % Volume fraction
 nu = '0.125';
@@ -23,27 +24,31 @@ NL = length(Lspan);
 cmap = 1 - linearrgbmap(1 - [60 0 143] / 256, NL + 1);
 cmap = cmap(2 : end, :);
 
-% Subplot 1, 2 : evolution of l2 norm and correlation function
+%% Plot correlation functions and l2 norms
 for nL = 1 : NL
 
   % Get box size
   L = Lspan(nL);
   
   % Compute l2 norm and plot correlation functions
-  [xi, l2norm] = render(nu, L, cmap(nL, :));
+  l2norm = plotVelocityCorrelation(nu, L, cmap(nL, :));
 
   % Store correlation length and l2 norm
-  correlationLength = [correlationLength; L, xi];
   L2norm = [L2norm; L, l2norm];
 
 end
 
-% Load in images
-vel50 = recolorImage(imread('../snapshots/velocity/nu0.125_L50_1.5.png'));
-vel100 = recolorImage(imread('../snapshots/velocity/nu0.125_L100_2.5.png'));
-vel150 = recolorImage(imread('../snapshots/velocity/nu0.125_L150_3.75.png'));
+%% Load in images and plot
+try
+  vel50 = resizeVelocity(imread('../snapshots/velocity/nu0.125_L50_1.5.png'));
+  vel100 = resizeVelocity(imread('../snapshots/velocity/nu0.125_L100_2.5.png'));
+  vel150 = resizeVelocity(imread('../snapshots/velocity/nu0.125_L150_3.75.png'));
+catch
+  vel50 = [];
+  vel100 = [];
+  vel150 = [];
+end
 
-% Plot particle simulations
 sp50 = subplot(3, 4, 1);
 
   imshow(vel50)
@@ -63,19 +68,15 @@ sp150 = subplot(3, 4, [2 6]);
   velocityColorbarHandle.TickLabelInterpreter = 'latex';
   velocityColorbarLabel = ylabel(velocityColorbarHandle, '$|\mathbf{u}|$', 'interpreter', 'latex', 'rotation', 0, 'FontSize', 18, 'units', 'inches');
 
-% Subplot 2 : Correlation function; create labels
+%% Format
 sp4 = subplot(3, 4, [3 4 7 8]);
   
   % Plot C = 0 for reference
   plot([0 1], [0 0], 'k--', 'HandleVisibility', 'off')
   r = linspace(0, 0.5, 128);
-  color = 'k';
-%   plot(r, 1.5379e-04 * sin(2 * pi * r) ./ (2 * pi * r), ':', 'Color', color, 'DisplayName', '${\rm Corr}[\mathbf{u}_0]$')
 
   xlabel('$r / L$')
   ylabel('$\overline{{\rm Corr}[\mathbf{u}]}$')
-  
-%   legend('fontsize', 18)
   
   xlim([0 0.5])
   ylim([-4e-5 4e-4])
@@ -113,6 +114,7 @@ sp6 = subplot(3, 4, [11 12]);
   xlabel('$L / \ell$')
   ylabel('$\overline{||\mathbf{u}||_2}$')
 
+%% Position subplots
 sp50.Units = 'inches';
 sp100.Units = 'inches';
 sp150.Units = 'inches';
@@ -134,6 +136,10 @@ sp4.Units = 'inches';
 sp5.Units = 'inches';
 sp6.Units = 'inches';
 
+sp4.FontSize = 18;
+sp5.FontSize = 18;
+sp6.FontSize = 18;
+
 sp4.Position(1) = sum(sp150.Position([1 3])) + 1.75;
 sp4.Position(2) = sp150.Position(2) + 0.4;
 sp4.Position(4) = 0.8 * sp150.Position(4);
@@ -146,10 +152,6 @@ sp5.Position(4) = 0.6 * (fig.PaperSize(2) - sp150.Position(4));
 
 sp6.Position([1 3]) = sp4.Position([1 3]);
 sp6.Position([2 4]) = sp5.Position([2 4]);
-
-sp4.FontSize = 18;
-sp5.FontSize = 18;
-sp6.FontSize = 18;
 
 lengthColorbarHandle.Units = 'inches';
 lengthColorbarHandle.Position(1) = sum(sp4.Position([1 3])) + 0.1;
@@ -171,62 +173,36 @@ velocityColorbarHandle.Position(4) = 0.6 * sp150.Position(4);
 velocityColorbarHandle.Position(2) = sp150.Position(2) + 0.2 * sp150.Position(4);
 velocityColorbarLabel.Position(1) = 0.5;
 
-label = @(s) annotation('textbox', 'units', 'inches', 'fontsize', ax.FontSize, 'string', s, 'interpreter', 'latex', 'edgecolor', 'none');
-A = label('(a)');
-B = label('(b)');
-C = label('(c)');
-D = label('(d)');
+A = subplotLabel('(a)', gca);
+B = subplotLabel('(b)', sp4, 'northwest', [-1 -0.4]);
+C = subplotLabel('(c)', sp5, 'northwest', [-1 -0.4]);
+D = subplotLabel('(d)', sp6, 'northwest', [-1 -0.4]);
 
 A.Position(1) = 0;
-
-B.Position(1) = sp4.Position(1) - 1;
-B.Position(2) = sum(sp4.Position([2 4])) - 0.4;
-
 A.Position(2) = B.Position(2);
 
-C.Position(1) = A.Position(1);
-C.Position(2) = sum(sp5.Position([2 4])) - 0.4;
-
-D.Position(1) = B.Position(1);
-D.Position(2) = C.Position(2);
-
-
-function [correlationLength, l2norm] = render(nu, L, col)
+%% Plotting function
+function l2norm = plotVelocityCorrelation(nu, L, col)
 
   % Get file name
-  source = sprintf('../data/processed/correlation/nu%s_L%d', nu, L);
-  filenames = sortfiles(source, 'corr', []);
-  Nfiles = length(filenames);
+  source = sprintf('../../data/processed/correlation_functions/nu%s_L%d', nu, L);
 
-  % Preallocate for computing average correlation function
-  Cbar = 0;
+  r = load(strcat(source, '/r.dat'));
+  r = r(1, :);
 
+  C = load(strcat(source, '/u.dat'));
+  Nt = size(C, 1);
+    
   % Preallocate for storing l2 norm
-  l2Evolution = [];
+  l2Evolution = sqrt(C(:, 1));
 
   % Store time
-  t = 1 : Nfiles;
-
-  % Loop over files
-  for nf = 1 : Nfiles
-    C = load(strcat(source, '/', filenames{nf}));
-    l2Evolution = [l2Evolution; sqrt(abs(C(5, 1)))];
-  end
-
-  % Averaging interval
-  Nspan = min(200, Nfiles) : Nfiles;
+  t = 0 : (Nt - 1);
   
-  % Compute average
-  for nf = Nspan
-    C = load(strcat(source, '/', filenames{nf}));
-    Cbar = Cbar + C(5, :);
-  end
+  % Averaging interval
+  Nspan = min(200, Nt) : Nt;
 
-  % Normalize
-  Cbar = Cbar / length(Nspan);
-
-  % Get radial coordinate
-  r = C(1, :);
+  Cbar = mean(C(Nspan, :), 1);
 
   % Subplot 1 : Evolution of the L2 norm
   subplot(3, 4, [9 10])
@@ -238,29 +214,6 @@ function [correlationLength, l2norm] = render(nu, L, col)
   plot(r(2 : end) / L, Cbar(2 : end) / L^2, '-', 'Color', col, 'DisplayName', 'simulation')
   hold on
 
-  [~,id] = find(Cbar < 0, 1);
-  correlationLength = r(id);
   l2norm = mean(l2Evolution(Nspan));
 
-end
-
-function im = recolorImage(im)
-
-  N1 = size(im, 1);
-  N2 = size(im, 2);
-  
-  sp = 2;
-
-  cx = 100;
-  cy = 120;
-
-  im = im((cx + 1) : sp : N1, (cy + 1) : sp : (N2 - cy), :);
-  N1 = size(im, 1);
-  N2 = size(im, 2);
-
-  im = reshape(im, [N1 * N2 3]);
-%   im(sum(im, 2) == 0, :) = 255;
-  im = reshape(im, [N1 N2 3]);
-%   im = uint8(round(255 * (double(im) / 180).^3));
-  
 end

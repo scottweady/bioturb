@@ -1,22 +1,28 @@
 
 close all
+addpath('utils')
 fig = journal_figure([6.75 2], 2);
 
-% Load in continuum data
-load('../data/fig4/unorm.mat');
-load('../data/fig4/correlation.mat', 'r', 'C');
+%% Load data and configure
 
 tc = 2.3453; % characteristic time scale
-umag = load('../data/fig4/umag.dat');
-umag = reshape(umag, [256 256 256]) / tc;
 
-% Load in discrete data
-load('../data/fig4/L175.mat');
+load('../../data/processed/continuum/L175.mat');
+load('../../data/processed/continuum/unorm.mat');
+load('../../data/processed/continuum/correlation.mat', 'r', 'C');
+
+try
+  umag = load('../../data/processed/continuum/umag.dat');
+  umag = reshape(umag, [256 256 256]) / tc;
+catch
+  umag = zeros(2, 2, 2);
+end
 
 % Color scheme
 c_continuum = [0.1375 0.0685 0.3191];
 c_discrete = [0.71 0.21 0.48];
 
+%% Plot continuum simulation
 sp1 = subplot(1, 3, 1);
 
   N = size(umag, 1);
@@ -43,6 +49,7 @@ sp1 = subplot(1, 3, 1);
   
   xticks([]), yticks([]), zticks([])
 
+%% Plot velocity norm
 sp2 = subplot(1, 3, 2);
 
   id = 1 : 10 : length(unorm);
@@ -59,6 +66,7 @@ sp2 = subplot(1, 3, 2);
 
   legend('FontSize', 18, 'location', 'southeast')
 
+%% Plot correlation function
 sp3 = subplot(1, 3, 3);
 
   plot(r, C / C(1), 'Color', c_continuum, 'DisplayName', 'continuum'), hold on
@@ -71,8 +79,9 @@ sp3 = subplot(1, 3, 3);
   xlabel('$r / L$')
   ylabel('$\overline{{\rm Corr}[\mathbf{u}]}$')
 
-  legend('FontSize', 18, 'location', 'southwest')
+  legend('location', 'southwest')
 
+%% Format
 sp1.Units = 'inches';
 sp2.Units = 'inches';
 sp3.Units = 'inches';
@@ -99,18 +108,10 @@ colorbarHandle.Position(1) = sum(sp1.Position([1 3])) + 0.25;
 colorbarHandle.Position(4) = (2 / 3) * sp1.Position(4);
 colorbarHandle.Position(2) = sp1.Position(2) + (1 / 6) * sp1.Position(4);
 
-ax = gca;
+A = subplotLabel('(a)', gca);
+B = subplotLabel('(b)', sp2, 'northwest', [-1.1 -0.25]);
+C = subplotLabel('(c)', sp3, 'northwest', [-0.75 -0.25]);
 
-label = @(s) annotation('textbox', 'units', 'inches', 'fontsize', 18, 'string', s, 'interpreter', 'latex', 'edgecolor', 'none');
-a = label('(a)');
-b = label('(b)');
-c = label('(c)');
+A.Position(1) = 0;
+A.Position(2) = B.Position(2);
 
-a.Position(1) = 0;
-b.Position(1) = sp2.Position(1) - 1;
-
-c.Position(1) = sp3.Position(1) - 0.75;
-c.Position(2) = sum(sp3.Position([2 4])) - 0.25;
-
-a.Position(2) = c.Position(2);
-b.Position(2) = c.Position(2);

@@ -14,11 +14,15 @@ data/*
 !data/examples
 !data/processed
 data/processed/correlation
+data/processed/continuum/*.dat
 
-figs/snapshots
 figs/data
+figs/processed
+figs/snapshots
 
 *.ai
 *.pdf
+*.png
 *.pptx
 .DS_Store
+.vscode
