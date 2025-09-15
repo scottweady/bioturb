@@ -1,0 +1,3 @@
+[submodule "continuum"]
+	path = bingham-cpp
+	url = https://github.com/scottweady/bingham-cpp.git

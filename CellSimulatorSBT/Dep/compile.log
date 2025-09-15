@@ -1,0 +1,107 @@
+Wed Mar 13 10:58:48 EDT 2024
+[  3%] Building CXX object CMakeFiles/pvfmm.dir/src/cheb_utils.cpp.o
+[  6%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/cheb_utils.cpp.o
+[ 20%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/device_wrapper.cpp.o
+[ 20%] Building CXX object CMakeFiles/pvfmm.dir/src/device_wrapper.cpp.o
+[ 26%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/legendre_rule.cpp.o
+[ 26%] Building CXX object CMakeFiles/pvfmm.dir/src/legendre_rule.cpp.o
+[ 43%] Building CXX object CMakeFiles/pvfmm.dir/src/math_utils.cpp.o
+[ 43%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/mat_utils.cpp.o
+[ 46%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/math_utils.cpp.o
+[ 46%] Building CXX object CMakeFiles/pvfmm.dir/src/mat_utils.cpp.o
+[ 46%] Building CXX object CMakeFiles/pvfmm.dir/src/mem_mgr.cpp.o
+[ 46%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/mem_mgr.cpp.o
+[ 46%] Building CXX object CMakeFiles/pvfmm.dir/src/mortonid.cpp.o
+[ 53%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/mortonid.cpp.o
+[ 53%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/profile.cpp.o
+[ 53%] Building CXX object CMakeFiles/pvfmm.dir/src/profile.cpp.o
+[ 56%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/pvfmm-wrapper.cpp.o
+[ 60%] Building CXX object CMakeFiles/pvfmm.dir/src/pvfmm-wrapper.cpp.o
+[ 63%] Building CXX object CMakeFiles/pvfmmStatic.dir/src/tree_node.cpp.o
+[ 66%] Building CXX object CMakeFiles/pvfmm.dir/src/tree_node.cpp.o
+[ 70%] Linking CXX static library libpvfmm.a
+[ 73%] Linking CXX shared library libpvfmm.so
+[ 73%] Built target pvfmmStatic
+[ 76%] Building CXX object examples/CMakeFiles/fmm_cheb.dir/src/example1.cpp.o
+[ 83%] Building CXX object examples/CMakeFiles/fmm_pts.dir/src/fmm_pts.cpp.o
+[ 86%] Building CXX object examples/CMakeFiles/example1.dir/src/example1.cpp.o
+[ 86%] Building CXX object examples/CMakeFiles/example2.dir/src/example2.cpp.o
+[ 86%] Built target pvfmm
+[ 90%] Linking CXX executable fmm_cheb
+[ 93%] Linking CXX executable example1
+[ 93%] Built target fmm_cheb
+[ 93%] Built target example1
+[ 96%] Linking CXX executable example2
+[ 96%] Built target example2
+[100%] Linking CXX executable fmm_pts
+[100%] Built target fmm_pts
+[ 36%] Built target pvfmm
+[ 73%] Built target pvfmmStatic
+[ 80%] Built target example1
+[ 86%] Built target example2
+[ 93%] Built target fmm_pts
+[100%] Built target fmm_cheb
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /mnt/home/bpalmer/envs/hydro_deps/share/pvfmm/pvfmmConfig.cmake
+-- Installing: /mnt/home/bpalmer/envs/hydro_deps/share/pvfmm/pvfmmConfigVersion.cmake
+-- Installing: /mnt/home/bpalmer/envs/hydro_deps/lib/libpvfmm.so
+-- Installing: /mnt/home/bpalmer/envs/hydro_deps/lib/libpvfmm.a
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm/
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_cheb.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//tree.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//pvfmm.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//interac_list.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//cheb_node.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//math_utils.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//kernel.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//cheb_node.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//dtypes.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//kernel.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//intrin_wrapper.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_pts_gpu.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_tree.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//legendre_rule.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mem_mgr.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mat_utils.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//pvfmm.f90
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//tree.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//ompUtils.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//parUtils.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//vector.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//pvfmm_common.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mortonid.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//stacktrace.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//precomp_mat.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_node.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mpi_node.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//pvfmm.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mpi_node.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mat_utils.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_node.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//device_wrapper.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//lapack.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//ompUtils.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//device_wrapper.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_cheb.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mortonid.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//profile.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//matrix.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_pts.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_pts.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//precomp_mat.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mem_mgr.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fft_wrapper.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mpi_tree.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//fmm_tree.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//vector.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//cheb_utils.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//parUtils.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//mpi_tree.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//pvfmm.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//tree_node.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//interac_list.hpp
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//cheb_utils.txx
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//blas.h
+-- Up-to-date: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm//matrix.hpp
+-- Installing: /mnt/home/bpalmer/envs/hydro_deps/include/pvfmm/pvfmm_config.h
