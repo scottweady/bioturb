@@ -12,3 +12,5 @@ CellSimulatorSBT/Example
 
 data/*
 !data/examples
+!data/processed
+data/processed/correlation
